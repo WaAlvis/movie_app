@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:movie_app/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(const AppState());
+void main() => runApp(const StateApp());
 
-class AppState extends StatelessWidget {
-  const AppState({super.key});
+class StateApp extends StatelessWidget {
+  const StateApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<MoviesProvider>(
-          create: (_) => MoviesProvider(),
-          lazy: false,
+        ChangeNotifierProvider(
+          create: (context) => MoviesProvider(),
         ),
       ],
       child: const MyApp(),
@@ -26,16 +25,38 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Material App Bar'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+    return const MaterialApp(
+      title: 'Movies App',
+      home: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final moviesProvider = Provider.of<MoviesProvider>(context);
+
+    final movies = moviesProvider.onPlayNow;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Material App Bar'),
       ),
+      body: ListView.separated(
+          itemBuilder: (context, i) {
+            return Card(
+                child: FadeInImage(
+              placeholder: NetworkImage(movies[i].fullBackdropImg),
+              image: NetworkImage(movies[i].fullBackdropImg),
+            ));
+          },
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: moviesProvider.onPlayNow.length),
     );
   }
 }
