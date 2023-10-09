@@ -46,5 +46,3 @@ class Dates {
         minimum: DateTime.parse(json["minimum"]),
       );
 }
-
-
