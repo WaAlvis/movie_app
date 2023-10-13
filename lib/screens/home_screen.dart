@@ -6,17 +6,19 @@ import '../search/search_delegate.dart';
 import '../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     final moviesProvider = Provider.of<MoviesProvider>(context);
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Películas en cines'),
+          title: const Text('Películas en cines'),
           elevation: 0,
           actions: [
             IconButton(
-              icon: Icon(Icons.search_outlined),
+              icon: const Icon(Icons.search_outlined),
               onPressed: () =>
                   showSearch(context: context, delegate: MovieSearchDelegate()),
             )
@@ -27,12 +29,21 @@ class HomeScreen extends StatelessWidget {
             children: [
               // Tarjetas principales
               CardSwiper(movies: moviesProvider.onDisplayMovies),
-
-              // Slider de películas
+              const SizedBox(
+                height: 30,
+              ),
+              // Slider de películas Populares
               MovieSlider(
                 movies: moviesProvider.popularMovies, // populares,
                 title: 'Populares', // opcional
                 onNextPage: () => moviesProvider.getPopularMovies(),
+              ),
+
+              // Slider de películas Mas votadas
+              MovieSlider(
+                movies: moviesProvider.topRatedMovies, // populares,
+                title: 'Las más valoradas', // opcional
+                onNextPage: () => moviesProvider.getTopRatedMovies(),
               ),
             ],
           ),

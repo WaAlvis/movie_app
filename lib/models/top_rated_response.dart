@@ -2,27 +2,27 @@ import 'dart:convert';
 
 import 'package:movie_app/models/models.dart';
 
-class NowPlayingResponse {
-  Dates dates;
+class TopRatedResponse {
+  // Dates? dates;
   int page;
   List<Movie> results;
   int totalPages;
   int totalResults;
 
-  NowPlayingResponse({
-    required this.dates,
+  TopRatedResponse({
+    // this.dates,
     required this.page,
     required this.results,
     required this.totalPages,
     required this.totalResults,
   });
 
-  factory NowPlayingResponse.fromJson(String str) =>
-      NowPlayingResponse.fromMap(json.decode(str));
+  factory TopRatedResponse.fromJson(String str) =>
+      TopRatedResponse.fromMap(json.decode(str));
 
-  factory NowPlayingResponse.fromMap(Map<String, dynamic> json) =>
-      NowPlayingResponse(
-        dates: Dates.fromMap(json["dates"]),
+  factory TopRatedResponse.fromMap(Map<String, dynamic> json) =>
+      TopRatedResponse(
+        // dates: Dates.fromMap(json["dates"]),
         page: json["page"],
         results: List<Movie>.from(json["results"].map((x) => Movie.fromMap(x))),
         totalPages: json["total_pages"],
